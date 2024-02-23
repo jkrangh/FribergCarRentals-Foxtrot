@@ -23,6 +23,7 @@ namespace FribergCarRentals_Foxtrot
             app.UseStaticFiles();
             //Random kommentar
             app.UseRouting();
+            //test samma rad
             //kommentar
             app.UseAuthorization();
 

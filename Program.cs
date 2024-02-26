@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using FribergCarRentals_Foxtrot.Data;
 namespace FribergCarRentals_Foxtrot
 {
     public class Program
@@ -5,10 +8,12 @@ namespace FribergCarRentals_Foxtrot
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<FoxtrotContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("FoxtrotContext") ?? throw new InvalidOperationException("Connection string 'FoxtrotContext' not found.")));
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

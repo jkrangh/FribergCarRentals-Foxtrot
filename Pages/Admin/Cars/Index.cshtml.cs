@@ -12,18 +12,18 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
 {
     public class IndexModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly ICar carRepo;
 
-        public IndexModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public IndexModel(ICar carRepo)
         {
-            _context = context;
+            this.carRepo = carRepo;
         }
 
-        public IList<Car> Car { get;set; } = default!;
+        public IEnumerable<Car> Car { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Car = await _context.Car.ToListAsync();
+            Car = await carRepo.GetAllAsync();
         }
     }
 }

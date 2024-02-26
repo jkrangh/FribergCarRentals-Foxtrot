@@ -13,6 +13,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="User.Orders" />
             <input type="hidden" asp-for="User.UserId" />
             <div class="form-group">
                 <label asp-for="User.Name" class="control-label"></label>
@@ -29,11 +30,11 @@
                 <input asp-for="User.Password" class="form-control" />
                 <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
-         @*    <div class="form-group form-check">
+            <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="User.IsAdmin" /> @Html.DisplayNameFor(model => model.User.IsAdmin)
                 </label>
-            </div> *@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

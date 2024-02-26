@@ -12,18 +12,18 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Categories
 {
     public class IndexModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly ICategory categoryRepo;
 
-        public IndexModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public IndexModel(ICategory categoryRepo)
         {
-            _context = context;
+            this.categoryRepo = categoryRepo;
         }
 
         public IList<Category> Category { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Category = await _context.Category.ToListAsync();
+            Category = await categoryRepo.GetAllCategoriesAsync();
         }
     }
 }

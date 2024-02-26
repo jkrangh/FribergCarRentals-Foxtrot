@@ -13,24 +13,24 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Categories
 {
     public class EditModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly ICategory categoryRepo;
 
-        public EditModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public EditModel(ICategory categoryRepo)
         {
-            _context = context;
+            this.categoryRepo = categoryRepo;
         }
 
         [BindProperty]
         public Category Category { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category =  await _context.Category.FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category =  await categoryRepo.GetCategoryByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -48,30 +48,19 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Categories
                 return Page();
             }
 
-            _context.Attach(Category).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                if (Category != null)
+                {
+                    await categoryRepo.UpdateAsync(Category);
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoryExists(Category.CategoryId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Page();
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _context.Category.Any(e => e.CategoryId == id);
         }
     }
 }

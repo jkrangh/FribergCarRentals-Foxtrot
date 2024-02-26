@@ -10,7 +10,7 @@ namespace FribergCarRentals_Foxtrot
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<FoxtrotContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("FoxtrotContext") ?? throw new InvalidOperationException("Connection string 'FoxtrotContext' not found.")));
-
+                
             // Add services to the container.
             builder.Services.AddRazorPages();
             

@@ -6,37 +6,78 @@
 }
 
 <h1>Index</h1>
+<link rel="stylesheet" href="~/css/Order.css" />
+<hr />
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].EndDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Order) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
-            </td>
-        </tr>
+@if (Model.ActiveOrders != null && Model.ActiveOrders.Any())
+{
+    <h2>Active Orders</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User Email</th>
+                <th>Car Brand</th>
+                <th>Car Model</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.ActiveOrders)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.User.Email</td>
+                    <td>@order.Car.Brand</td>
+                    <td>@order.Car.Model</td>
+                    <td>@order.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@order.EndDate.ToString("yyyy-MM-dd")</td>
+                    <td>
+
+                        <a asp-page="/AdminOrders/Delete" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else
+{
+    <p>No active orders found.</p>
+}
+
+@if (Model.InactiveOrders != null && Model.InactiveOrders.Any())
+{
+    <h2>Inactive Orders</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User Email</th>
+                <th>Car Brand</th>
+                <th>Car Model</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.InactiveOrders)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.User.Email</td>
+                    <td>@order.Car.Brand</td>
+                    <td>@order.Car.Model</td>
+                    <td>@order.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@order.EndDate.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No inactive orders found.</p>
+}

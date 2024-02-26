@@ -12,11 +12,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
 {
     public class CreateModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IUser userRep;
 
-        public CreateModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public CreateModel(IUser userRep)
         {
-            _context = context;
+            this.userRep = userRep;
         }
 
         public IActionResult OnGet()
@@ -30,13 +30,12 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
-            _context.User.Add(User);
-            await _context.SaveChangesAsync();
+            userRep.AddAsync(User);
 
             return RedirectToPage("./Index");
         }

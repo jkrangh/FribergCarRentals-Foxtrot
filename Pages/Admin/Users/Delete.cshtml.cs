@@ -12,11 +12,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
 {
     public class DeleteModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IUser userRep;
 
-        public DeleteModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DeleteModel(IUser userRep)
         {
-            _context = context;
+            this.userRep = userRep;
         }
 
         [BindProperty]
@@ -29,8 +29,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
                 return NotFound();
             }
 
-            var user = await _context.User.FirstOrDefaultAsync(m => m.UserId == id);
-
+            var user = await userRep.GetByIdAsync(id);
+            
             if (user == null)
             {
                 return NotFound();
@@ -49,12 +49,12 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
+            var user = await userRep.GetByIdAsync(id);
+            
             if (user != null)
             {
                 User = user;
-                _context.User.Remove(User);
-                await _context.SaveChangesAsync();
+                userRep.DeleteAsync(user);
             }
 
             return RedirectToPage("./Index");

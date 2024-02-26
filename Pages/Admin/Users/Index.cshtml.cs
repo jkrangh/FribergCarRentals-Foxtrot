@@ -12,18 +12,18 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
 {
     public class IndexModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IUser userRep;
 
-        public IndexModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public IndexModel(IUser userRep)
         {
-            _context = context;
+            this.userRep = userRep;
         }
 
         public IList<User> User { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            User = await _context.User.ToListAsync();
+            User = await userRep.GetAllAsync();
         }
     }
 }

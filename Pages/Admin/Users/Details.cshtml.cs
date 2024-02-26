@@ -12,11 +12,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
 {
     public class DetailsModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IUser userRep;
 
-        public DetailsModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DetailsModel(IUser userRep)
         {
-            _context = context;
+            this.userRep = userRep;
         }
 
         public User User { get; set; } = default!;
@@ -27,8 +27,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
             {
                 return NotFound();
             }
-
-            var user = await _context.User.FirstOrDefaultAsync(m => m.UserId == id);
+            var user = await userRep.GetByIdAsync(id);
+            
             if (user == null)
             {
                 return NotFound();

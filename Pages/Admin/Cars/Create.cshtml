@@ -34,9 +34,9 @@
                 <span asp-validation-for="Car.Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Car.Category" class="control-label"></label>
-                <input asp-for="Car.Category" class="form-control" />
-                <span asp-validation-for="Car.Category" class="text-danger"></span>
+                 <select asp-for="Car.Category.CategoryId" asp-items="Model.Categories">
+                    <option>Select a category</option>
+                     </select>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">

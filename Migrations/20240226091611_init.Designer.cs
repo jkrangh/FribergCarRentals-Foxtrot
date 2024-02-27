@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FribergCarRentals_Foxtrot.Migrations
 {
     [DbContext(typeof(FoxtrotContext))]
-    [Migration("20240226090354_init")]
+    [Migration("20240226091611_init")]
     partial class init
     {
         /// <inheritdoc />

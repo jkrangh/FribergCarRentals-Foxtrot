@@ -12,24 +12,25 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
 {
     public class DeleteModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IOrder orderRep;
 
-        public DeleteModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DeleteModel(IOrder orderRep)
         {
-            _context = context;
+            
+            this.orderRep = orderRep;
         }
 
         [BindProperty]
-        public Order Order { get; set; } = default!;
+        public Order Order { get; set; } 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Order.FirstOrDefaultAsync(m => m.OrderId == id);
+            var order = await orderRep.GetOrderByIdAsync(id);
 
             if (order == null)
             {
@@ -42,20 +43,24 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                Order = await orderRep.GetOrderByIdAsync(id);
+                if (Order != null)
+                {
+                    Order.IsActive = false;
+                    await orderRep.UpdateAsync(Order);
+                }
+            }
+            catch (Exception)
+            {
+
+                return RedirectToPage("/Error");
             }
 
-            var order = await _context.Order.FindAsync(id);
-            if (order != null)
-            {
-                Order = order;
-                _context.Order.Remove(Order);
-                await _context.SaveChangesAsync();
-            }
+
 
             return RedirectToPage("./Index");
         }

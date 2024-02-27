@@ -13,65 +13,44 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
 {
     public class EditModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
-
-        public EditModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
-        {
-            _context = context;
-        }
+        private readonly IOrder orderRep;
+        private readonly ICar carRep;
+        private readonly IUser userRep;
 
         [BindProperty]
-        public Order Order { get; set; } = default!;
+        public Order Order { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public EditModel(IOrder orderRep, ICar carRep, IUser userRep)
         {
-            if (id == null)
+            this.orderRep = orderRep;
+            this.carRep = carRep;
+            this.userRep = userRep;
+        }
+
+        public async Task<IActionResult> OnGetAsync(int id)
+        {
+            Order = await orderRep.GetOrderByIdAsync(id);
+
+            if (Order == null)
             {
                 return NotFound();
             }
 
-            var order =  await _context.Order.FirstOrDefaultAsync(m => m.OrderId == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            Order = order;
+            Order.Car = await carRep.Order.CarId(id);
+            Order.User = await userRep.Order.UserId(id);
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
+
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            Order.Car = await carRep.Order.CarId(id);
+            Order.User = await userRep.Order.UserId(id);
 
-            _context.Attach(Order).State = EntityState.Modified;
+            orderRep.UpdateAsync(Order);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(Order.OrderId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool OrderExists(int id)
-        {
-            return _context.Order.Any(e => e.OrderId == id);
+            return RedirectToPage("/Index");
         }
     }
 }

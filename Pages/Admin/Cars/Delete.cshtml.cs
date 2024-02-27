@@ -12,24 +12,24 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
 {
     public class DeleteModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly ICar carRep;
 
-        public DeleteModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DeleteModel(ICar carRep)
         {
-            _context = context;
+            this.carRep = carRep;
         }
 
         [BindProperty]
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Car.FirstOrDefaultAsync(m => m.CarId == id);
+            var car = await carRep.GetByIdAsync(id);
 
             if (car == null)
             {
@@ -42,19 +42,18 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Car.FindAsync(id);
+            var car = await carRep.GetByIdAsync(id);
             if (car != null)
             {
                 Car = car;
-                _context.Car.Remove(Car);
-                await _context.SaveChangesAsync();
+                await carRep.DeleteAsync(Car);            
             }
 
             return RedirectToPage("./Index");

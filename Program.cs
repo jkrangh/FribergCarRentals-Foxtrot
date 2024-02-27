@@ -13,7 +13,7 @@ namespace FribergCarRentals_Foxtrot
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-            
+            builder.Services.AddTransient<ICar,CarRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

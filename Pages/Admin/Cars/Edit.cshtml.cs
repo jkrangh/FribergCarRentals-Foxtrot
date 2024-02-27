@@ -12,25 +12,25 @@ using FribergCarRentals_Foxtrot.Models;
 namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
 {
     public class EditModel : PageModel
-    {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+    {  
+        private readonly ICar carRep;
 
-        public EditModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public EditModel(ICar carRep)
         {
-            _context = context;
+            this.carRep = carRep;
         }
 
         [BindProperty]
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var car =  await _context.Car.FirstOrDefaultAsync(m => m.CarId == id);
+            var car =  await carRep.GetByIdAsync(id);
             if (car == null)
             {
                 return NotFound();
@@ -46,32 +46,25 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
             if (!ModelState.IsValid)
             {
                 return Page();
-            }
-
-            _context.Attach(Car).State = EntityState.Modified;
+            }         
 
             try
             {
-                await _context.SaveChangesAsync();
+                if(Car != null)
+                {
+                    await carRep.UpdateAsync(Car);
+                }               
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CarExists(Car.CarId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Page();
             }
-
             return RedirectToPage("./Index");
         }
 
-        private bool CarExists(int id)
-        {
-            return _context.Car.Any(e => e.CarId == id);
-        }
+        //private bool CarExists(int id)
+        //{
+        //    return carRep.Ge(e => e.CarId == id);
+        //}
     }
 }

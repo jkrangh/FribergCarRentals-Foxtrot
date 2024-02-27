@@ -13,11 +13,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
 {
     public class EditModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IUser userRep;
 
-        public EditModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public EditModel(IUser userRep)
         {
-            _context = context;
+            this.userRep = userRep;
         }
 
         [BindProperty]
@@ -29,8 +29,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
             {
                 return NotFound();
             }
-
-            var user =  await _context.User.FirstOrDefaultAsync(m => m.UserId == id);
+            var user = await userRep.GetByIdAsync(id);
+            
             if (user == null)
             {
                 return NotFound();
@@ -48,11 +48,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
                 return Page();
             }
 
-            _context.Attach(User).State = EntityState.Modified;
+            //_context.Attach(User).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await userRep.UpdateAsync(User);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,7 +71,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Users
 
         private bool UserExists(int id)
         {
-            return _context.User.Any(e => e.UserId == id);
+            var user = userRep.GetByIdAsync(id);
+            return user != null;
         }
     }
 }

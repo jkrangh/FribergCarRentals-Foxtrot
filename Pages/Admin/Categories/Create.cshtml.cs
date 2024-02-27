@@ -12,11 +12,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Categories
 {
     public class CreateModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly ICategory categoryRepo;
 
-        public CreateModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public CreateModel(ICategory categoryRepo)
         {
-            _context = context;
+            this.categoryRepo = categoryRepo;
         }
 
         public IActionResult OnGet()
@@ -35,8 +35,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Categories
                 return Page();
             }
 
-            _context.Category.Add(Category);
-            await _context.SaveChangesAsync();
+            categoryRepo.AddAsync(Category);
 
             return RedirectToPage("./Index");
         }

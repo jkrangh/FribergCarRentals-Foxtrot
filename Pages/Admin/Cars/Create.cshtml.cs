@@ -11,12 +11,12 @@ using FribergCarRentals_Foxtrot.Models;
 namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
 {
     public class CreateModel : PageModel
-    {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+    {   
+        private readonly ICar carRep;
 
-        public CreateModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
-        {
-            _context = context;
+        public CreateModel(ICar carRep)
+        {        
+            this.carRep = carRep;
         }
 
         public IActionResult OnGet()
@@ -35,8 +35,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
                 return Page();
             }
 
-            _context.Car.Add(Car);
-            await _context.SaveChangesAsync();
+           await carRep.AddAsync(Car);            
 
             return RedirectToPage("./Index");
         }

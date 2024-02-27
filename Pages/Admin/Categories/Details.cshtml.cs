@@ -12,23 +12,23 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Categories
 {
     public class DetailsModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly ICategory categoryRepo;
 
-        public DetailsModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DetailsModel(ICategory categoryRepo)
         {
-            _context = context;
+            this.categoryRepo = categoryRepo;
         }
 
         public Category Category { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category.FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = await categoryRepo.GetCategoryByIdAsync(id);
             if (category == null)
             {
                 return NotFound();

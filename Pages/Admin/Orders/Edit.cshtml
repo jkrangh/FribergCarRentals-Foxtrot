@@ -26,15 +26,15 @@
 
 
     <div class="form-group">
-        <label asp-for="Order.CarId"></label>
-        <input asp-for="Order.CarId" class="form-control" />
-        <span asp-validation-for="Order.CarId" class="text-danger"></span>
+        <label asp-for="Order.Car.CarId"></label>
+        <input asp-for="Order.Car.CarId" class="form-control" />
+        <span asp-validation-for="Order.Car.CarId" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Order.UserId"></label>
-        <input asp-for="Order.UserId" class="form-control" />
-        <span asp-validation-for="Order.UserId" class="text-danger"></span>
+        <label asp-for="Order.User.UserId"></label>
+        <input asp-for="Order.User.UserId" class="form-control" />
+        <span asp-validation-for="Order.User.UserId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Save</button>

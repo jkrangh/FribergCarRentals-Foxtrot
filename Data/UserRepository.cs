@@ -14,14 +14,14 @@ namespace FribergCarRentals_Foxtrot.Data
 
         public async Task AddAsync(User user)
         {
-            foxtrotContext.Add(user);
-            foxtrotContext.SaveChanges();
+            await foxtrotContext.AddAsync(user);
+            await foxtrotContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(User user)
         {
             foxtrotContext.User.Remove(user);
-            foxtrotContext.SaveChanges();
+            await foxtrotContext.SaveChangesAsync();
         }
 
         public async Task<List<User>> GetAllAsync()
@@ -34,11 +34,10 @@ namespace FribergCarRentals_Foxtrot.Data
             return await foxtrotContext.User.FirstOrDefaultAsync(u => u.UserId == id);
         }
 
-        public async Task<User> UpdateAsync(User user)
+        public async Task UpdateAsync(User user)
         {
             foxtrotContext.User.Update(user);
-            foxtrotContext.SaveChanges();
-            return user;
+            await foxtrotContext.SaveChangesAsync();          
         }
     }
 }

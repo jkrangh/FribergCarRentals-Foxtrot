@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FribergCarRentals_Foxtrot.Migrations
 {
     [DbContext(typeof(FoxtrotContext))]
-    [Migration("20240226091611_init")]
-    partial class init
+    [Migration("20240227110204_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,9 @@ namespace FribergCarRentals_Foxtrot.Migrations
 
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");

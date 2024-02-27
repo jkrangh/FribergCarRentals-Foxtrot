@@ -14,7 +14,7 @@ namespace FribergCarRentals_Foxtrot
             builder.Services.AddTransient<IUser, UserRepository>();
             builder.Services.AddTransient<ICategory, CategoryRepository>();
             builder.Services.AddTransient<ICar,CarRepository>();
-            builder.Services.AddTransient<IOrder, OrderRepository>();
+            builder.Services.AddTransient<IOrder,OrderRepository>();
 
             // Add services to the container.
             builder.Services.AddRazorPages();    

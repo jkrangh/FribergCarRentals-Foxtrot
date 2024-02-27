@@ -23,7 +23,7 @@ namespace FribergCarRentals_Foxtrot.Data
             await foxtrotContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Car>> GetAllAsync()
+        public async Task<IList<Car>> GetAllAsync()
         {
           return await foxtrotContext.Car.Include(s=>s.Category).ToListAsync();
             

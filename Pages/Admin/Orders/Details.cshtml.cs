@@ -34,8 +34,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
             }
            else
             {
-                Order.Car = carRep.GetByIdAsync(Order.CarId);
-                Order.User = userRep.GetByIdAsync(Order.UserId);
+                Order.Car = await carRep.GetByIdAsync(Order.Car.CarId);
+                Order.User = await userRep.GetByIdAsync(Order.User.UserId);
                 return Page();
             }
             

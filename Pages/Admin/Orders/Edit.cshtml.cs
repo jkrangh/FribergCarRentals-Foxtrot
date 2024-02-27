@@ -36,8 +36,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
                 return NotFound();
             }
 
-            Order.Car = await carRep.Order.CarId(id);
-            Order.User = await userRep.Order.UserId(id);
+            Order.Car = await carRep.GetByIdAsync(id);
+            Order.User = await userRep.GetByIdAsync(id);
 
             return Page();
         }
@@ -45,8 +45,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Order.Car = await carRep.Order.CarId(id);
-            Order.User = await userRep.Order.UserId(id);
+            //Order.Car = await carRep.Order.CarId(id);
+            //Order.User = await userRep.Order.UserId(id);
 
             orderRep.UpdateAsync(Order);
 

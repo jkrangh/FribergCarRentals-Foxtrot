@@ -19,7 +19,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
             this.carRepo = carRepo;
         }
 
-        public IEnumerable<Car> Car { get;set; } = default!;
+        public IList<Car> Car { get;set; } = default!;
 
         public async Task OnGetAsync()
         {

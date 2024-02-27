@@ -91,6 +91,9 @@ namespace FribergCarRentals_Foxtrot.Migrations
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 

@@ -8,7 +8,7 @@ namespace FribergCarRentals_Foxtrot.Data
         Task<User> GetByIdAsync(int? id);
         Task AddAsync(User user);
         Task DeleteAsync(User user);
-        Task <User> UpdateAsync(User user);
+        Task UpdateAsync(User user);
 
     }
 }

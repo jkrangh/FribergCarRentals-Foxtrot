@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FribergCarRentals_Foxtrot.Migrations
 {
     [DbContext(typeof(FoxtrotContext))]
-    [Migration("20240227110204_initial")]
-    partial class initial
+    [Migration("20240227145347_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

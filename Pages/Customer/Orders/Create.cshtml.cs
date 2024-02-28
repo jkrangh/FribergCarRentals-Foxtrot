@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FribergCarRentals_Foxtrot.Data;
 using FribergCarRentals_Foxtrot.Models;
 
-namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
+namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
 {
     public class CreateModel : PageModel
     {

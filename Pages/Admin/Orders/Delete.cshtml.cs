@@ -62,7 +62,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Orders
 
 
 
-            return RedirectToPage("./Admin/Orders/Index");
+            return RedirectToPage("/Admin/Orders/Index");
         }
     }
 }

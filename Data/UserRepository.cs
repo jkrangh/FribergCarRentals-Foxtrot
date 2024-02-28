@@ -39,5 +39,10 @@ namespace FribergCarRentals_Foxtrot.Data
             foxtrotContext.User.Update(user);
             await foxtrotContext.SaveChangesAsync();          
         }
+        public async Task<User> GetByCredentialsAsync(string username, string password)
+        {
+            return await foxtrotContext.User.FirstOrDefaultAsync(u => u.Email == username && u.Password == password);
+        }
+
     }
 }

@@ -9,6 +9,6 @@ namespace FribergCarRentals_Foxtrot.Data
         Task AddAsync(User user);
         Task DeleteAsync(User user);
         Task UpdateAsync(User user);
-
+        Task<User> GetByCredentialsAsync(string username, string password);
     }
 }

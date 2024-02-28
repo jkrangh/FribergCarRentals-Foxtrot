@@ -12,11 +12,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Users
 {
     public class CreateModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IUser userRep;
 
-        public CreateModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public CreateModel(IUser userRep)
         {
-            _context = context;
+            this.userRep = userRep;
         }
 
         public IActionResult OnGet()
@@ -35,10 +35,9 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Users
                 return Page();
             }
 
-            _context.User.Add(User);
-            await _context.SaveChangesAsync();
+            userRep.AddAsync(User);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Index");
         }
     }
 }

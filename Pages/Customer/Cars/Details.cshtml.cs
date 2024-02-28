@@ -12,23 +12,24 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Cars
 {
     public class DetailsModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly ICar carRep;
 
-        public DetailsModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DetailsModel(ICar carRep)
         {
-            _context = context;
+            this.carRep = carRep;
         }
+    
 
         public Car Car { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var car = await _context.Car.FirstOrDefaultAsync(m => m.CarId == id);
+            var car = await carRep.GetByIdAsync(id);
             if (car == null)
             {
                 return NotFound();

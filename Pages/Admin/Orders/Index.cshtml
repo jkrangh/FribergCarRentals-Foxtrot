@@ -35,8 +35,9 @@
                     <td>@order.StartDate.ToString("yyyy-MM-dd")</td>
                     <td>@order.EndDate.ToString("yyyy-MM-dd")</td>
                     <td>
-
-                        <a asp-page="/AdminOrders/Delete" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Delete</a>
+                        <a asp-page="/Admin/Orders/Delete" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Delete</a>
+                        <a asp-page="/Admin/Orders/Details" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Details</a>
+                        <a asp-page="/Admin/Orders/Edit" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Edit</a>
                     </td>
                 </tr>
             }

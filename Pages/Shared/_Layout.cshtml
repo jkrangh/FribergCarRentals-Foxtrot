@@ -33,12 +33,12 @@
                             <form method="post" asp-page="/UserTracking/Logout">
                                 <button type="submit">Logout</button>
                             </form>
-                            //min kod här nere
-                            <p>Welcome @Context.Session.GetInt32("UserId")</p>
-                            <button style="text-decoration: none;">
-                                <a href="/Customer/Users/Details?id=@Context.Session.GetInt32("UserId")">Ändra kunduppgifter</a>
+                            
+                            <br>
+                            <button>
+                                <a style="text-decoration: none; color: black;" href="/Customer/Users/Details?id=@Context.Session.GetInt32("UserId")">Ändra kunduppgifter</a>
                             </button>
-                           //din kod slutar här
+                           
                         }
                         else
                         {

@@ -16,6 +16,16 @@ namespace FribergCarRentals_Foxtrot
             builder.Services.AddTransient<ICar,CarRepository>();
             builder.Services.AddTransient<IOrder,OrderRepository>();
 
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+
             // Add services to the container.
             builder.Services.AddRazorPages();    
 
@@ -33,6 +43,7 @@ namespace FribergCarRentals_Foxtrot
             app.UseStaticFiles();
             //Random kommentar
             app.UseRouting();
+            app.UseSession();
             //test samma rad
             //kommentar
             app.UseAuthorization();

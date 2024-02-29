@@ -26,6 +26,20 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Orders/Index">Admin Orders</a>
                         </li>
                     </ul>
+                    <div>
+                        @if (Context.Session.GetString("Email") != null)
+                        {
+                            <p>Welcome @Context.Session.GetString("Email")</p>
+                            <form method="post" asp-page="/UserTracking/Logout">
+                                <button type="submit">Logout</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <p></p>
+                            <a href="@Url.Page("/UserTracking/Login")">Login</a>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>

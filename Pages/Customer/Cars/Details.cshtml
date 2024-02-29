@@ -11,12 +11,7 @@
     <h4>Car</h4>
     <hr />
     <dl class="row">
-        @* <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Car.Category)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Car.Category)
-        </dd> *@
+        
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Car.Brand)
         </dt>
@@ -48,7 +43,7 @@
             @Html.DisplayFor(model => model.Car.Price)
         </dd>
         <dd class="col-sm-10">
-            <img src=@Html.DisplayFor(model => model.Car.Picture) />
+            <img src=@Html.DisplayFor(model => model.Car.Picture)  />
         </dd>
     </dl>
         

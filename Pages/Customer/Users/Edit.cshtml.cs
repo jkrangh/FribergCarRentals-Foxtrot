@@ -66,7 +66,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Users
                 }
             }
           
-            return RedirectToPage("/Customer/Users/Index");
+            return RedirectToPage("/Index");
         }
 
         private bool UserExists(int id)

@@ -15,17 +15,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Order.IsActive" /> @Html.DisplayNameFor(model => model.Order.IsActive)
+                    <input type="hidden" class="form-check-input" asp-for="Order.IsActive" />
                 </label>
             </div>
             <div class="form-group">
+                @* <label asp-for="Order.User.UserId" class="control-label"></label> *@
+                <input type="hidden" asp-for="Order.User.UserId" value="@ViewData["UserId"]" /> <!--Cookie from login used as preset-->
+            </div>
+            <div class="form-group">
+                @* <label asp-for="Order.Car.CarId" class="control-label"></label> *@
+                <input type="hidden" asp-for="Car.CarId" value="@Model.Car.CarId" class="form-control" />
+            </div>
+            <div class="form-group">
                 <label asp-for="Order.StartDate" class="control-label"></label>
-                <input asp-for="Order.StartDate" class="form-control" />
+                <input type="date" asp-for="Order.StartDate" class="form-control" />
                 <span asp-validation-for="Order.StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order.EndDate" class="control-label"></label>
-                <input asp-for="Order.EndDate" class="form-control" />
+                <input type="date" asp-for="Order.EndDate" class="form-control" />
                 <span asp-validation-for="Order.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">

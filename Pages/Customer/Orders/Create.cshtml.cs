@@ -12,31 +12,52 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
 {
     public class CreateModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IOrder orderRepo;
+        private readonly ICar carRepo;
+        private readonly IUser userRepo;
 
-        public CreateModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public CreateModel(IOrder orderRepo, ICar carRepo, IUser userRepo)
         {
-            _context = context;
+            this.orderRepo = orderRepo;
+            this.carRepo = carRepo;
+            this.userRepo = userRepo;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet(int carId)
         {
+            Car = await carRepo.GetByIdAsync(carId);
             return Page();
         }
 
         [BindProperty]
         public Order Order { get; set; } = default!;
+        [BindProperty]
+        public Car Car { get; set; }
+        [BindProperty]
+        public User User { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            int? currentUserId = HttpContext.Session.GetInt32("UserId");
+            User user = await userRepo.GetByIdAsync(currentUserId);
+            Car car = await carRepo.GetByIdAsync(Car.CarId);
+            
+            Order order = new Order
             {
-                return Page();
-            }
+                User = user,
+                Car = car,
+                StartDate = Order.StartDate,
+                EndDate = Order.EndDate,
+                IsActive = true
+            };
 
-            _context.Order.Add(Order);
-            await _context.SaveChangesAsync();
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            await orderRepo.AddAsync(order);
 
             return RedirectToPage("./Index");
         }

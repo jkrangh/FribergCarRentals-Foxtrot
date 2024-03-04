@@ -14,11 +14,14 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
     public class EditModel : PageModel
     {  
         private readonly ICar carRep;
+        private readonly ICategory catRep;
 
-        public EditModel(ICar carRep)
+        public EditModel(ICar carRep, ICategory catRep)
         {
             this.carRep = carRep;
+            this.catRep = catRep;
         }
+        public SelectList Categories { get; set; }
 
         [BindProperty]
         public Car Car { get; set; } = default!;
@@ -36,6 +39,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
                 return NotFound();
             }
             Car = car;
+            Categories = new SelectList(await catRep.GetAllCategoriesAsync(), nameof(Category.CategoryId), nameof(Category.Name));
             return Page();
         }
 
@@ -43,10 +47,13 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }         
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+            Car.Category = await catRep.GetCategoryByIdAsync(Car.Category.CategoryId);
+
+          
 
             try
             {

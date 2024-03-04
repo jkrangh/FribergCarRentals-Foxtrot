@@ -13,24 +13,24 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Users
 {
     public class EditModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IUser userRep;
 
-        public EditModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public EditModel(IUser userRep)
         {
-            _context = context;
+            this.userRep = userRep;
         }
 
         [BindProperty]
         public User User { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user =  await _context.User.FirstOrDefaultAsync(m => m.UserId == id);
+            var user =  await userRep.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -45,14 +45,14 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Users
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                //return Page();
             }
 
-            _context.Attach(User).State = EntityState.Modified;
+            //_context.Attach(User).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await userRep.UpdateAsync(User);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -65,13 +65,14 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Users
                     throw;
                 }
             }
-
-            return RedirectToPage("./Index");
+          
+            return RedirectToPage("/Index");
         }
 
         private bool UserExists(int id)
         {
-            return _context.User.Any(e => e.UserId == id);
+            userRep.GetByIdAsync(User.UserId);
+            return User != null;
         }
     }
 }

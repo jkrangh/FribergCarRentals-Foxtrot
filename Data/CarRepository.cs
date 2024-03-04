@@ -31,7 +31,7 @@ namespace FribergCarRentals_Foxtrot.Data
 
         public async Task<Car> GetByIdAsync(int id)
         {
-            return await foxtrotContext.Car.FirstOrDefaultAsync(s=>s.CarId==id);
+            return await foxtrotContext.Car.Include(s => s.Category).FirstOrDefaultAsync(s=>s.CarId==id);
         }
 
         public async Task UpdateAsync(Car car)

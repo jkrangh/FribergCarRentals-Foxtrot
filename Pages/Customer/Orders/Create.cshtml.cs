@@ -52,6 +52,8 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
                 IsActive = true
             };
 
+            car.IsAvailable = false;
+
             //if (!ModelState.IsValid)
             //{
             //    return Page();

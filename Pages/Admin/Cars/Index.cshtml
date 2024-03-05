@@ -25,19 +25,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Car[0].Model)
             </th>
-           @*  <th>
-                @Html.DisplayNameFor(model => model.Car[0].Description)
-            </th> *@
-           @*  <th>
-                @Html.DisplayNameFor(model => model.Car[0].Picture)
-            </th> *@
+        
             <th>
                 @Html.DisplayNameFor(model => model.Car[0].IsAvailable)
             </th>
-         @*    <th>
-                @Html.DisplayNameFor(model => model.Car[0].Price)
-            </th> *@
-            
+                     
             <th></th>
         </tr>
     </thead>
@@ -45,10 +37,10 @@
 @foreach (var item in Model.Car) {
         <tr>
                 <td>
-                    @Html.DisplayFor(model => model.Car[0].Category.Name)
+                    @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(model => model.Car[0].CarId)
+                    @Html.DisplayFor(modelItem => item.CarId)
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Brand)
@@ -56,18 +48,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
             </td>
-        @*     <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td> *@
-        @*     <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td> *@
+      
             <td>
                 @Html.DisplayFor(modelItem => item.IsAvailable)
             </td>
-         @*    <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td> *@
+      
           
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.CarId">Edit</a> |

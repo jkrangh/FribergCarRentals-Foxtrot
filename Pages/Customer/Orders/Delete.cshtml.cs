@@ -12,24 +12,24 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
 {
     public class DeleteModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IOrder orderRepo;
 
-        public DeleteModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DeleteModel(IOrder orderRepo)
         {
-            _context = context;
+            this.orderRepo = orderRepo;
         }
 
         [BindProperty]
         public Order Order { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Order.FirstOrDefaultAsync(m => m.OrderId == id);
+            var order = await orderRepo.GetOrderByIdAsync(id);
 
             if (order == null)
             {
@@ -42,19 +42,18 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Order.FindAsync(id);
+            var order = await orderRepo.GetOrderByIdAsync(id);
             if (order != null)
             {
                 Order = order;
-                _context.Order.Remove(Order);
-                await _context.SaveChangesAsync();
+                await orderRepo.DeleteAsync(Order);
             }
 
             return RedirectToPage("./Index");

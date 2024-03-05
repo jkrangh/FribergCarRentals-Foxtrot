@@ -35,7 +35,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Users
                 return Page();
             }
 
-            userRep.AddAsync(User);
+            await userRep.AddAsync(User);
 
             return RedirectToPage("/Index");
         }

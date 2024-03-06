@@ -31,14 +31,14 @@
                         {
                             <p>Welcome @Context.Session.GetString("Email")</p>
                             <form method="post" asp-page="/UserTracking/Logout">
-                                <button type="submit">Logout</button>
+                                <button type="submit">Logga ut</button>
                             </form>
                                                     
                         }
                         else
                         {
                             <p></p>
-                            <a href="@Url.Page("/UserTracking/Login")">Login</a>
+                            <a href="@Url.Page("/UserTracking/Login")">Logga in</a>
                         }
                     </div>
                 </div>

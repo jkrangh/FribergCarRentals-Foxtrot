@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Användare</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Lägg till ny</a>
 </p>
 <table class="table">
     <thead>
@@ -22,9 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.User[0].Password)
             </th>
-          @*<th>
+          <th>
                 @Html.DisplayNameFor(model => model.User[0].IsAdmin)
-            </th> *@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,13 +40,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
-          @*   <td>
-                @Html.DisplayFor(modelItem => item.IsAdmin)
-            </td> *@
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.UserId">Delete</a>
+                @Html.DisplayFor(modelItem => item.IsAdmin)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.UserId">Ändra</a> |
+                <a asp-page="./Details" asp-route-id="@item.UserId">Detaljvy</a> |
+                <a asp-page="./Delete" asp-route-id="@item.UserId">Radera</a>
             </td>
         </tr>
 }

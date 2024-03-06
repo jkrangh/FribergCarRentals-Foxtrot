@@ -12,18 +12,18 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
 {
     public class IndexModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IOrder orderRepo;
 
-        public IndexModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public IndexModel(IOrder orderRepo)
         {
-            _context = context;
+            this.orderRepo = orderRepo;
         }
 
         public IList<Order> Order { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Order = await _context.Order.ToListAsync();
+            Order = await orderRepo.GetAllOrdersAsync();
         }
     }
 }

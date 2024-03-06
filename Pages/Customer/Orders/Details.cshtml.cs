@@ -12,23 +12,26 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
 {
     public class DetailsModel : PageModel
     {
-        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
+        private readonly IOrder orderRepo;
+        private readonly ICar carRepo;
 
-        public DetailsModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
+        public DetailsModel(IOrder orderRepo, ICar carRepo)
         {
-            _context = context;
+            this.orderRepo = orderRepo;
+            this.carRepo = carRepo;
         }
 
         public Order Order { get; set; } = default!;
+        public Car Car { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var order = await _context.Order.FirstOrDefaultAsync(m => m.OrderId == id);
+            var order = await orderRepo.GetOrderByIdAsync(id);
             if (order == null)
             {
                 return NotFound();
@@ -36,6 +39,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
             else
             {
                 Order = order;
+                Car = await carRepo.GetByIdAsync(order.Car.CarId);
             }
             return Page();
         }

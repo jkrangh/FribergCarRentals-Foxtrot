@@ -33,12 +33,11 @@ namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars.CarDates
             StartDate = order.StartDate;
             EndDate = order.EndDate;
 
-            var list = await orderRep.GetAllOrdersCategoryAsync();
-            var list2 = list.Where(s => s.Car.IsAvailable == false);
+            var list = await orderRep.GetAllOrdersCategoryAsync();          
             //Order = list2.ToList();
-            //Order = list2.Where(s => s.StartDate >= StartDate || s.EndDate >= EndDate).ToList();
+            Order = list.Where(s => s.StartDate <= EndDate).ToList();
 
-            Order = list2.Where(s => s.StartDate <= EndDate && s.StartDate <= StartDate && s.EndDate <= EndDate && s.EndDate >= StartDate).ToList();
+            //Order = list2.Where(s => (s.StartDate <= EndDate) && (s.StartDate <= StartDate) && (s.EndDate <= EndDate) && (s.EndDate >= StartDate)).ToList();
 
             //Order = list2.Where(s => s.EndDate <= EndDate && s.EndDate >= StartDate).ToList();
 

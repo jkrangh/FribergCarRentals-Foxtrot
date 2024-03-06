@@ -60,5 +60,10 @@ namespace FribergCarRentals_Foxtrot.Data
             dbContext.Update(order);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<List<Order>> GetAllOrdersByCustomerAsync(int? id)
+        {
+            return await dbContext.Order.Where(x => x.User.UserId == id).Include(x => x.Car).ToListAsync();
+        }
     }
 }

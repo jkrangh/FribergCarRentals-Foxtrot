@@ -23,7 +23,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
 
         public async Task OnGetAsync()
         {
-            Order = await orderRepo.GetAllOrdersAsync();
+            Order = await orderRepo.GetAllOrdersByCustomerAsync(HttpContext.Session.GetInt32("UserId"));
         }
     }
 }

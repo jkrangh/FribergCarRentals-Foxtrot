@@ -54,6 +54,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.IsAvailable)
+                </td>                
+                <td>
+                    <form asp-route-id="@item.Car.CarId">
+                        <button type="submit">Lämna ut</button>
+                    </form>
+                </td>
         </tr>
 }
     </tbody>

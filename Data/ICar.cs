@@ -8,5 +8,7 @@ namespace FribergCarRentals_Foxtrot.Data
         Task AddAsync(Car car);
         Task UpdateAsync(Car car);
         Task DeleteAsync(Car car);
+        Task<List<Car>> GetAvailableCarsAsync(DateOnly StartDate, DateOnly EndDate);
+        Task<List<Category>> GetCarCategoryAsync();
     }
 }

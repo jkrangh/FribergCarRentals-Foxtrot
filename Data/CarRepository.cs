@@ -1,4 +1,5 @@
 ﻿using FribergCarRentals_Foxtrot.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace FribergCarRentals_Foxtrot.Data
@@ -38,6 +39,42 @@ namespace FribergCarRentals_Foxtrot.Data
         {
             foxtrotContext.Update(car);
             await foxtrotContext.SaveChangesAsync();
+        }
+        public async Task<List<Car>> GetAvailableCarsAsync(DateOnly StartDate, DateOnly EndDate)
+        {
+            var availableCars = await foxtrotContext.Car
+                .Where(s => s.IsAvailable)
+                .ToListAsync();
+
+            var orderTime = await foxtrotContext.Order
+                .Include(o => o.Car) 
+                .Where(o => o.StartDate <= EndDate && o.EndDate >= StartDate)
+                .ToListAsync();
+
+            if (orderTime == null)
+            {
+                
+                return availableCars;
+            }
+
+            var availableCarIds = orderTime
+                .Where(o => o.Car != null) 
+                .Select(o => o.Car.CarId)
+                .ToList();
+
+            if (availableCars == null)
+            {
+                
+                return new List<Car>();
+            }
+
+            return availableCars
+                .Where(s => !availableCarIds.Contains(s.CarId))
+                .ToList();
+        }
+        public async Task<List<Category>> GetCarCategoryAsync()
+        {
+            return await foxtrotContext.Category.ToListAsync();
         }
     }
 }

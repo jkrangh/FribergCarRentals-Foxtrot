@@ -13,16 +13,43 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Cars
     public class IndexModel : PageModel
     {
         private readonly ICar carRep;
+        private readonly IOrder orderRep;
+        [BindProperty]
+        public DateOnly StartDate { get; set; }
 
-        public IndexModel(ICar carRep)
+        [BindProperty]
+        public DateOnly EndDate { get; set; }
+
+        public IList<Car> Cars { get; set; }
+        public List<Category> CarCategories { get; set; }
+        public List<Order> Orders { get; set; }
+
+        public IndexModel(ICar carRep, IOrder orderRep)
         {
             this.carRep = carRep;
+            this.orderRep = orderRep;
         }
-        public IList<Car> Car { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Car = await carRep.GetAllAsync();
+            
+            Cars = await carRep.GetAllAsync();
+            Orders = await orderRep.GetAllOrdersAsync();
         }
+        public async Task OnPostAsync()
+        {
+            CarCategories = await carRep.GetCarCategoryAsync();
+
+            if (ModelState.IsValid)
+            {
+                await LoadAvailableCars();
+            }
+        }
+        private async Task LoadAvailableCars()
+        {
+            Cars = await carRep.GetAvailableCarsAsync(StartDate, EndDate);
+        }
+
     }
+
 }

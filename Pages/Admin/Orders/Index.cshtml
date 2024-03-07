@@ -5,23 +5,23 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Ordrar</h1>
 <link rel="stylesheet" href="~/css/Order.css" />
 <hr />
 
 @if (Model.ActiveOrders != null && Model.ActiveOrders.Any())
 {
-    <h2>Active Orders</h2>
+    <h2>Aktiva ordrar</h2>
     <table class="table">
         <thead>
             <tr>
                 <th>Order ID</th>
-                <th>User Email</th>
-                <th>Car Brand</th>
-                <th>Car Model</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Actions</th>
+                <th>Epostadress</th>
+                <th>Tillverkare</th>
+                <th>Modell</th>
+                <th>Startdatum</th>
+                <th>Slutdatum</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -35,9 +35,9 @@
                     <td>@order.StartDate.ToString("yyyy-MM-dd")</td>
                     <td>@order.EndDate.ToString("yyyy-MM-dd")</td>
                     <td>
-                        <a asp-page="/Admin/Orders/Delete" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Delete</a>
-                        <a asp-page="/Admin/Orders/Details" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Details</a>
-                        <a asp-page="/Admin/Orders/Edit" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Edit</a>
+                        <a asp-page="/Admin/Orders/Delete" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Radera</a> |
+                        <a asp-page="/Admin/Orders/Details" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Detaljvy</a> |
+                        <a asp-page="/Admin/Orders/Edit" asp-route-id="@order.OrderId" asp-route-carId="@order.Car.CarId">Ändra</a>
                     </td>
                 </tr>
             }
@@ -51,16 +51,17 @@ else
 
 @if (Model.InactiveOrders != null && Model.InactiveOrders.Any())
 {
-    <h2>Inactive Orders</h2>
+    <h2>Inaktiva ordrar</h2>
     <table class="table">
         <thead>
             <tr>
                 <th>Order ID</th>
-                <th>User Email</th>
-                <th>Car Brand</th>
-                <th>Car Model</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Epostadress</th>
+                <th>Tillverkare</th>
+                <th>Modell</th>
+                <th>Startdatum</th>
+                <th>Slutdatum</th>
+                
             </tr>
         </thead>
         <tbody>

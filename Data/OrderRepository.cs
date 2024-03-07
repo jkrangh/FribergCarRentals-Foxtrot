@@ -43,8 +43,10 @@ namespace FribergCarRentals_Foxtrot.Data
         {
             return await dbContext.Order.Include(x => x.User).Include(s => s.Car).ToListAsync();
         }
-
-       
+        public async Task<List<Order>> GetAllOrdersCategoryAsync()
+        {
+            return await dbContext.Order.Include(x => x.User).Include(s => s.Car).ThenInclude(y=>y.Category).ToListAsync();
+        }
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
@@ -59,6 +61,11 @@ namespace FribergCarRentals_Foxtrot.Data
         {
             dbContext.Update(order);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<Order>> GetAllOrdersByCustomerAsync(int? id)
+        {
+            return await dbContext.Order.Where(x => x.User.UserId == id).Include(x => x.Car).ToListAsync();
         }
     }
 }

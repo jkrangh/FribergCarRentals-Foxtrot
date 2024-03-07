@@ -7,14 +7,17 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Order[0].IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Car.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Car.Model)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Order[0].StartDate)
@@ -32,13 +35,18 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Car.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Model)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
             </td>

@@ -1,0 +1,68 @@
+﻿@page
+@model FribergCarRentals_Foxtrot.Pages.Admin.Cars.CarDates.IndexModel
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h2>Du valde datumen:</h2>
+<h4>@Model.StartDate</h4>
+<h4>@Model.EndDate</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Order id
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Car.Category.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Car.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].Car.Model)
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Order) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Car.Model)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.IsAvailable)
+                </td>                
+                <td>
+                    <form asp-route-id="@item.Car.CarId">
+                        <button type="submit">Lämna ut</button>
+                    </form>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

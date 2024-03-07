@@ -8,34 +8,34 @@ using Microsoft.EntityFrameworkCore;
 using FribergCarRentals_Foxtrot.Data;
 using FribergCarRentals_Foxtrot.Models;
 
-namespace FribergCarRentals_Foxtrot.Pages.Admin.Categories
+namespace FribergCarRentals_Foxtrot.Pages.Admin.Cars.CarDates
 {
     public class DetailsModel : PageModel
     {
-        private readonly ICategory categoryRepo;
+        private readonly FribergCarRentals_Foxtrot.Data.FoxtrotContext _context;
 
-        public DetailsModel(ICategory categoryRepo)
+        public DetailsModel(FribergCarRentals_Foxtrot.Data.FoxtrotContext context)
         {
-            this.categoryRepo = categoryRepo;
+            _context = context;
         }
 
-        public Category Category { get; set; } = default!;
+        public Order Order { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await categoryRepo.GetCategoryByIdAsync(id);
-            if (category == null)
+            var order = await _context.Order.FirstOrDefaultAsync(m => m.OrderId == id);
+            if (order == null)
             {
                 return NotFound();
             }
             else
             {
-                Category = category;
+                Order = order;
             }
             return Page();
         }

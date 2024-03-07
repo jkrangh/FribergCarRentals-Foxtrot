@@ -51,8 +51,7 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
                 EndDate = Order.EndDate,
                 IsActive = true
             };
-
-            car.IsAvailable = false;
+          
 
             //if (!ModelState.IsValid)
             //{

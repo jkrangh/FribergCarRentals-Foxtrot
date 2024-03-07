@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Bilar</h1>
 
 <form method="post" asp-page-handler="Filter">
     <div class="form-group">
@@ -72,6 +72,33 @@
         {
             <p>Not found</p>
         }
+
+@foreach (var item in Model.Car) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAvailable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+               <a asp-page="./Details" asp-route-id="@item.CarId">Detaljer</a> 
+               @if (item.IsAvailable == true)
+                    {
+                        <a asp-page="/Customer/Orders/Create" asp-route-carId="@item.CarId">| Boka</a>
+                    }
+                </td>
+        </tr>
+}
 
     </tbody>
 </table>

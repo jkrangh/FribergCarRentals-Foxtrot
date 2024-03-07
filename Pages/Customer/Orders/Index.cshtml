@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Ordrar</h1>
 
 <table class="table">
     <thead>
@@ -47,8 +47,8 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
+               
+                <a asp-page="./Delete" asp-route-id="@item.OrderId">Radera</a>
             </td>
         </tr>
 }

@@ -25,5 +25,6 @@ namespace FribergCarRentals_Foxtrot.Models
         [Required]
         public Category Category { get; set; }
 
+
     }
 }

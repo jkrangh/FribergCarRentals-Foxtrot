@@ -43,8 +43,10 @@ namespace FribergCarRentals_Foxtrot.Data
         {
             return await dbContext.Order.Include(x => x.User).Include(s => s.Car).ToListAsync();
         }
-
-       
+        public async Task<List<Order>> GetAllOrdersCategoryAsync()
+        {
+            return await dbContext.Order.Include(x => x.User).Include(s => s.Car).ThenInclude(y=>y.Category).ToListAsync();
+        }
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {

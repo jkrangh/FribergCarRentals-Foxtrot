@@ -12,5 +12,7 @@ namespace FribergCarRentals_Foxtrot.Data
         Task<IEnumerable<Order>> GetActiveOrdersAsync();
         Task<IEnumerable<Order>> GetInactiveOrdersAsync();
         Task<List<Order>> GetAllOrdersByCustomerAsync(int? id);
+        Task<List<Order>> GetAllOrdersCategoryAsync();
+
     }
 }

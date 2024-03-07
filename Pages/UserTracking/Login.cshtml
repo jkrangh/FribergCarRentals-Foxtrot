@@ -4,28 +4,28 @@
     ViewData["Title"] = "Login";
 }
 <link rel="stylesheet" href="~/css/Login.css" />
-<h1>Login</h1>
+<h1>Logga in</h1>
 
 <div class="loginContainer">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label">Epostadress</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
+                <label asp-for="Password" class="control-label">Lösenord</label>
                 <input asp-for="Password" type="password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
             <div class="buttonContainer">
-                <input class="buttons" type="button" value="Create" class="btn btn-primary" onclick="location.href='@Url.Page("/Customer/Users/Create")'" />
-                <input class="buttons" type="submit" value="Login" class="btn btn-primary" />
-                <input class="buttons" type="reset" value="Reset" class="btn btn-primary" onclick="resetForm()" />
+                <input class="buttons" type="button" value="Skapa ny användare" class="btn btn-primary" onclick="location.href='@Url.Page("/Customer/Users/Create")'" />
+                <input class="buttons" type="submit" value="Logga in" class="btn btn-primary" />
+                <input class="buttons" type="reset" value="Återställ" class="btn btn-primary" onclick="resetForm()" />
             </div>
         </form>
     </div>

@@ -42,39 +42,31 @@ namespace FribergCarRentals_Foxtrot.Data
         }
         public async Task<List<Car>> GetAvailableCarsAsync(DateOnly StartDate, DateOnly EndDate)
         {
-            var availableCars = await foxtrotContext.Car
-                .Where(s => s.IsAvailable)
-                .ToListAsync();
-
             var orderTime = await foxtrotContext.Order
-                .Include(o => o.Car) 
+                .Include(o => o.Car)
                 .Where(o => o.StartDate <= EndDate && o.EndDate >= StartDate)
                 .ToListAsync();
 
             if (orderTime == null)
             {
                 
-                return availableCars;
+                return await foxtrotContext.Car.ToListAsync();
             }
 
-            var availableCarIds = orderTime
-                .Where(o => o.Car != null) 
+            var bookedCarIds = orderTime
+                .Where(o => o.Car != null)
                 .Select(o => o.Car.CarId)
                 .ToList();
 
-            if (availableCars == null)
-            {
-                
-                return new List<Car>();
-            }
-
-            return availableCars
-                .Where(s => !availableCarIds.Contains(s.CarId))
-                .ToList();
+            return await foxtrotContext.Car
+                .Where(s => !bookedCarIds.Contains(s.CarId))
+                .ToListAsync();
         }
+
         public async Task<List<Category>> GetCarCategoryAsync()
         {
             return await foxtrotContext.Category.ToListAsync();
         }
+        
     }
 }

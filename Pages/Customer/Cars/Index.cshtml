@@ -2,103 +2,78 @@
 @model FribergCarRentals_Foxtrot.Pages.Customer.Cars.IndexModel
 @{
     ViewData["Title"] = "Index";
+    
 }
+
+
 
 <h1>Bilar</h1>
 
-<form method="post" asp-page-handler="Filter">
+
+<form method="post" asp-page-handler="FilterByDate">
     <div class="form-group">
         <label for="StartDate">Start Date:</label>
-        <input asp-for="StartDate" type="date" class="form-control" />
+        <input asp-for="StartDate" type="date" class="form-control" asp-format="{0:yyyy-MM-dd}" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
     </div>
     <div class="form-group">
         <label for="EndDate">End Date:</label>
-        <input asp-for="EndDate" type="date" class="form-control" />
+        <input asp-for="EndDate" type="date" class="form-control" asp-format="{0:yyyy-MM-dd}" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
     </div>
-    <button type="submit" class="btn btn-primary">Filter</button>
+    <button type="submit" class="btn btn-primary">Filter by Date</button>
 </form>
+
+
+<form method="post" asp-page-handler="FilterByCategory">
+    <div>
+        <label for="categoryFilter">Filter by Car Category:</label>
+        <select id="categoryFilter" name="categoryFilter">
+            <option value="">All</option>
+            @foreach (var category in Model.CarCategories)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filter by Category</button>
+</form>
+
+
+
 <br />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cars[0].Category.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cars[0].Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cars[0].Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cars[0].IsAvailable)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cars[0].Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if(Model != null)
-        {
-            @foreach (var item in Model.Cars)
+@if (Model.FilteredCars != null && Model.FilteredCars.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Id</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th>Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in Model.FilteredCars)
             {
                 <tr>
+                    <td>@car.Category.Name</td>
+                    <td>@car.CarId</td>
+                    <td>@car.Brand</td>
+                    <td>@car.Model</td>
+                    <td>@car.Price</td>
+                    <td>@car.IsAvailable</td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Category.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Brand)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Model)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsAvailable)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        <a asp-page="./Details" asp-route-id="@item.CarId">Details</a> |
-                        <a asp-page="/Customer/Orders/Create" asp-route-carId="@item.CarId">Boka</a>
+                        <a asp-page="./Details" asp-route-id="@car.CarId">Details</a> |
+                        <a asp-page="/Customer/Orders/Create" asp-route-carId="@car.CarId">Boka</a>
                     </td>
                 </tr>
             }
-        }
-        else
-        {
-            <p>Not found</p>
-        }
-
-@foreach (var item in Model.Cars) {
-        <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAvailable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-               <a asp-page="./Details" asp-route-id="@item.CarId">Detaljer</a> 
-               @if (item.IsAvailable == true)
-                    {
-                        <a asp-page="/Customer/Orders/Create" asp-route-carId="@item.CarId">| Boka</a>
-                    }
-                </td>
-        </tr>
+        </tbody>
+    </table>
 }
-
-    </tbody>
-</table>
+else
+{
+    <p>No Cars found</p>
+}

@@ -38,7 +38,10 @@ namespace FribergCarRentals_Foxtrot.Pages.Login
                 {
                     HttpContext.Session.SetInt32("UserId", user.UserId);
                     HttpContext.Session.SetString("Email", Email);
-                    HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
+                    if (user.IsAdmin)
+                    {
+                        HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
+                    }
 
                     if (user.IsAdmin)
                     {

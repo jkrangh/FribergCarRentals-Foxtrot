@@ -17,15 +17,31 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Startsida</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Orders/Index">Admin Orders</a>
-                        </li>
                     </ul>
+                    @if (Context.Session.GetString("IsAdmin") != null)
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                           
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Orders/Index">Admin Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Cars/Index">Admin Cars</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Users/Index">Admin Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Categories/Index">Admin Categories</a>
+                            </li>
+                        </ul>
+                    }
                     <div>
                         @if (Context.Session.GetString("Email") != null)
                         {

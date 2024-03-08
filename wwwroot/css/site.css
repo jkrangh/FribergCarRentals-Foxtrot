@@ -20,3 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+/*Styling for website-logo*/
+.logo {
+    display: flex;
+    margin: 25px;
+    border: none !important;
+    background-color: #E3EBEE;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}

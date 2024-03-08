@@ -39,5 +39,9 @@ namespace FribergCarRentals_Foxtrot.Data
             context.Update(category);
             await context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Car>> GetByCategoryAsync(int categoryId)
+        {
+            return await context.Car.Where(c => c.Category.CategoryId == categoryId).ToListAsync();
+        }
     }
 }

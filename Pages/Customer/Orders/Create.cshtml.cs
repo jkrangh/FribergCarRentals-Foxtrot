@@ -42,21 +42,19 @@ namespace FribergCarRentals_Foxtrot.Pages.Customer.Orders
             int? currentUserId = HttpContext.Session.GetInt32("UserId");
             User user = await userRepo.GetByIdAsync(currentUserId);
             Car car = await carRepo.GetByIdAsync(Car.CarId);
-            
+
             Order order = new Order
             {
                 User = user,
                 Car = car,
                 StartDate = Order.StartDate,
                 EndDate = Order.EndDate,
-                IsActive = true
+                IsActive = true,
+                
             };
           
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            
+           
 
             await orderRepo.AddAsync(order);
 

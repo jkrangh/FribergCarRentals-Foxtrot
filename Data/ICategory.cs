@@ -9,5 +9,6 @@ namespace FribergCarRentals_Foxtrot.Data
         Task AddAsync(Category category);
         Task UpdateAsync(Category category);
         Task DeleteAsync(Category category);
+        Task<IEnumerable<Car>> GetByCategoryAsync(int categoryId);
     }
 }
